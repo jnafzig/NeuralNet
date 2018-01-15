@@ -22,10 +22,10 @@ layer(i).wij = rand(numneurons(i+1),numneurons(i))/sqrt(numneurons(i));
 layer(i).bi = zeros(numneurons(i+1),1);
 layer(i).activation = 'sigmoid';
 
-net = NeuralNet(layer);
+net = NeuralNet(layer, 'l2', 2e-3, 'l1', 2e-4);
 
 learning_rate = 1;
-maxepoch = 4;
+maxepoch = 1;
 batchsize = 200;
 
 tic;
@@ -48,10 +48,10 @@ while epoch<=maxepoch;
         end
         averagecost = averagecost + cost*batchsize/trainingsetsize;
         
-%         plotmnist(net.wij{1}'); 
-%         set(gca,'YTickLabel',[]);
-%         set(gca,'XTickLabel',[]);
-%         drawnow();
+        plotmnist(net.wij{1}'); 
+        set(gca,'YTickLabel',[]);
+        set(gca,'XTickLabel',[]);
+        drawnow();
 %         framenumber = framenumber+1;
 %         print(sprintf('video/%04d.png',framenumber),'-dpng')
 

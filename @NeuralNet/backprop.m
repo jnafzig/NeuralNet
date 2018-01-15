@@ -6,5 +6,6 @@ function [ cost, dcost_dwij, dcost_dbi, dcost_dinput, output ] = backprop( net, 
     dcost_dinput = dcost_da{1};
     output = a{end};
     
+    [ cost, dcost_dwij, dcost_dbi ] = net.regularize(cost, dcost_dwij, dcost_dbi);
 end
 

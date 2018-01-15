@@ -5,6 +5,8 @@ classdef NeuralNet
         bi;
         activation_fcn;
         cost_fcn;
+        l1;
+        l2;
     end
     properties (Dependent)
        numlayers;
@@ -13,13 +15,20 @@ classdef NeuralNet
     end
     
     methods
-        function net = NeuralNet(layer,cost)
+        function net = NeuralNet(layer,varargin)
             if (nargin~=0)
-                if nargin < 2
-                    cost = 'quadratic';
-                end
                 
-                net.cost_fcn = net.costfunctions(cost);
+                p = inputParser;
+                addParamValue(p,'cost','quadratic');
+                addParamValue(p,'l1',0);
+                addParamValue(p,'l2',0);
+                
+                parse(p,varargin{:});
+          
+                net.cost_fcn = net.costfunctions(p.Results.cost);
+           
+                net.l1 = p.Results.l1;
+                net.l2 = p.Results.l2;
                 
                 net.wij = {layer.wij};
                 net.bi = {layer.bi};
