@@ -4,6 +4,7 @@ classdef NeuralNet
         wij;
         bi;
         activation_fcn;
+        cost_fcn;
     end
     properties (Dependent)
        numlayers;
@@ -12,9 +13,14 @@ classdef NeuralNet
     end
     
     methods
-        function net = NeuralNet(layer)
+        function net = NeuralNet(layer,cost)
             if (nargin~=0)
-
+                if nargin < 2
+                    cost = 'quadratic';
+                end
+                
+                net.cost_fcn = net.costfunctions(cost);
+                
                 net.wij = {layer.wij};
                 net.bi = {layer.bi};
                 net.activation_fcn = cell(size(layer));
